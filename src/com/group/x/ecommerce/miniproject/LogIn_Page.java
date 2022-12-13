@@ -3,12 +3,19 @@ package com.group.x.ecommerce.miniproject;
 import java.sql.*;
 import java.util.Scanner;
 
-public class LogIn_Page extends Product {
-    // public void login(){
-    //Project Statement 2 - Only Registered Users can buy products
+public class LogIn_Page extends RuntimeException{
+    public LogIn_Page() {
+    	
+    }
+    public LogIn_Page(String s) {
+    	super(s);
+    }
+	
+    ProductServiceImpl p1 = new ProductServiceImpl();
     public void buyProduct() throws SQLException, ClassNotFoundException {
+    	
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Miniproject", "root", "root");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Miniproject", "root", "MysqlRoot@12");
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter UserName and Password");
         String userName1 = sc.next();
@@ -19,12 +26,11 @@ public class LogIn_Page extends Product {
             System.out.println("1. Check the quantity of product");
             System.out.println("2. Show entire registered User List");
             System.out.println("3. Check purchase details");
-//            System.out.println("Which action you want to do ?");
             int n = sc.nextInt();
 
             switch (n) {
                 case 1:
-                    checkQuantity();
+                   p1. checkQuantity();
                     break;
                 case 2:
                     Register_User ru = new Register_User();
@@ -35,8 +41,11 @@ public class LogIn_Page extends Product {
                     System.out.println("Enter Customer-Id ");
                     Scanner sc1 = new Scanner(System.in);
                     int cust_id = sc1.nextInt();
-                    checkPurchaseDetails(cust_id);
+                    p1.checkPurchaseDetails(cust_id);
                     break;
+                    
+                 default :
+                    	throw new LogIn_Page("Invalid Input.Please Enter Valid Input.");
             }
         }
         else {
@@ -47,14 +56,20 @@ public class LogIn_Page extends Product {
             if (r.next()) {
                 int cust_id = r.getInt(1);
                 System.out.println(cust_id);
-                showProductList(cust_id);
+              p1.  showProductList(cust_id);
             } else {
-                System.out.println("UserName or  Password is incorrect ");
+            	throw new LogIn_Page("Username or Password is incorrect . Please enter valid credentials.");
+               // System.out.println("UserName or  Password is incorrect ");
             }
         }
 
     }
+/*
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		*/
+	}
 
-}
 
 
